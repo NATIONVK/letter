@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For the Special One - A Heartfelt Surprising Journey</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700&family=Great+Vibes&family=Marcellus&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti JS -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        roseGold: '#C87D87',
+                        blushPink: '#FFD1DC',
+                        darkVelvet: '#1A0006',
+                        burgundy: '#4A0012',
+                        accentGold: '#F3E5AB',
+                        goldGlow: '#FFD700'
+                    },
+                    fontFamily: {
+                        bangla: ['"Anek Bangla"', 'sans-serif'],
+                        cursive: ['"Great Vibes"', 'cursive'],
+                        serifHeader: ['"Cinzel"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Anek Bangla', sans-serif;
+            background: radial-gradient(circle at center, #38020e 0%, #1a0006 60%, #0d0003 100%);
+            color: #ffeef2;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .glass-panel {
+            background: rgba(255, 230, 235, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(243, 229, 171, 0.25);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-paper {
+            background: rgba(255, 250, 245, 0.96);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 125, 135, 0.4);
+            color: #2b020a;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Smooth Page Transition Styles */
+        .page-step {
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(30px) scale(0.96);
+        }
+
+        .page-step.active {
+            opacity: 1;
+            pointer-events: auto;
+            position: relative;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Floating background particles canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Dynamic Gift Box Styles */
+        .gift-container {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        @media (min-width: 768px) {
+            .gift-box {
+                width: 220px;
+                height: 220px;
+            }
+        }
+
+        .gift-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #a81333 0%, #590014 100%);
+            border-radius: 16px;
+            border: 2px solid #F3E5AB;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 15px rgba(255,215,0,0.3);
+        }
+
+        .gift-ribbon-v {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 100%;
+            background: linear-gradient(180deg, #FFD700 0%, #D4AF37 100%);
+            box-shadow: 0 0 8px rgba(255,215,0,0.5);
+        }
+
+        .gift-ribbon-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 32px;
+            background: linear-gradient(90deg, #FFD700 0%, #D4AF37 100%);
+            box-shadow: 0 0 8px rgba(255,215,0,0.5);
+        }
+
+        .gift-lid {
+            position: absolute;
+            top: -12px;
+            left: -5%;
+            width: 110%;
+            height: 50px;
+            background: linear-gradient(135deg, #bd183c 0%, #70021c 100%);
+            border-radius: 12px;
+            border: 2px solid #F3E5AB;
+            z-index: 10;
+            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: top center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .gift-bow {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            z-index: 12;
+        }
+
+        .gift-bow::before, .gift-bow::after {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border: 4px solid #FFD700;
+            border-radius: 50% 50% 0 50%;
+            background: radial-gradient(circle, #ffe680 0%, #d4af37 100%);
+            top: 0;
+        }
+
+        .gift-bow::before {
+            left: -15px;
+            transform: rotate(30deg);
+        }
+
+        .gift-bow::after {
+            right: -15px;
+            transform: rotate(-30deg) scaleX(-1);
+        }
+
+        /* Gift Box Opening Animations */
+        .gift-opening .gift-lid {
+            transform: translateY(-160px) rotateX(45deg) rotateZ(-15deg) scale(1.1);
+            opacity: 0.2;
+        }
+
+        .gift-opening .gift-body {
+            animation: pulseUnwrap 3.5s ease-out forwards;
+        }
+
+        @keyframes pulseUnwrap {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.08) rotate(2deg); filter: brightness(1.3); }
+            60% { transform: scale(0.95) rotate(-2deg); filter: brightness(1.6); }
+            100% { transform: scale(1.2); opacity: 0; filter: brightness(2.5); }
+        }
+
+        /* Sparkle magic aura */
+        .magic-aura {
+            position: absolute;
+            inset: -40px;
+            background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,105,180,0.4) 40%, transparent 70%);
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        .gift-opening .magic-aura {
+            opacity: 1;
+            animation: auraExpand 3.5s ease-out forwards;
+        }
+
+        @keyframes auraExpand {
+            0% { transform: scale(0.2); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        /* Custom Scrollbar for Page 8 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 209, 220, 0.2);
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(200, 125, 135, 0.6);
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(200, 125, 135, 0.9);
+        }
+
+        .glow-gold {
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.6), 0 0 24px rgba(200, 125, 135, 0.4);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen justify-between relative selection:bg-roseGold selection:text-white">
+
+    <canvas id="particleCanvas"></canvas>
+
+    <header class="relative z-50 p-4 md:p-6 max-w-5xl mx-auto w-full flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-roseGold to-accentGold p-0.5 shadow-lg">
+                <div class="w-full h-full bg-darkVelvet rounded-full flex items-center justify-center">
+                    <i class="fas fa-heart text-roseGold text-sm"></i>
+                </div>
+            </div>
+            <div>
+                <h1 class="font-cursive text-2xl md:text-3xl text-accentGold glow-gold">For Her</h1>
+                <p class="text-[10px] tracking-widest text-blushPink/70 uppercase font-serifHeader">A Special Journey</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button id="soundToggleBtn" onclick="toggleAudio()" class="glass-panel px-3.5 py-1.5 rounded-full flex items-center space-x-2 text-xs md:text-sm text-accentGold hover:border-accentGold transition-all duration-300">
+                <i id="soundIcon" class="fas fa-music text-roseGold"></i>
+                <span id="soundLabel" class="hidden sm:inline">Ambient Music</span>
+            </button>
+
+            <div class="glass-panel px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-blushPink">
+                <span id="pageIndicator" class="text-accentGold font-bold text-sm">1</span> / 8
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-20 flex-1 flex items-center justify-center p-3 md:p-6 max-w-4xl mx-auto w-full my-auto">
+
+        <!-- ================= PAGE 1: MYSTERY HOOK ================= -->
+        <section id="page-1" class="page-step active">
+            <div class="glass-panel rounded-3xl p-6 md:p-12 text-center flex flex-col items-center justify-center min-h-[500px] border border-accentGold/30 relative overflow-hidden">
+                <div class="w-24 h-24 mb-6 rounded-full bg-gradient-to-br from-roseGold/20 to-burgundy/40 border border-accentGold/40 flex items-center justify-center shadow-2xl animate-pulse">
+                    <i class="fas fa-sparkles text-4xl text-accentGold"></i>
+                </div>
+
+                <span class="text-xs font-serifHeader tracking-widest text-accentGold uppercase mb-2">Hey Special One...</span>
+                <h2 class="font-cursive text-5xl md:text-7xl text-white mb-4 glow-gold">I owe you something...</h2>
+                <p class="text-sm md:text-base text-blushPink/90 max-w-lg mb-8 leading-relaxed">
+                    একটি বিশেষ অভিযোগ ও একটি নিঃশব্দ স্বীকারোক্তি!
+
+সেদিন শাড়ি পরে তুমি যে মায়াজালে আমাকে জড়িয়েছিলে, তার উপযুক্ত প্রশংসা না করার জন্য একটা আন্তরিক 'Sorry', আর সাথে অনেকগুলো স্পেশাল সারপ্রাইজ অপেক্ষা করছে শুধুমাত্র তোমার জন্য.....
+                </p>
+
+                <button onclick="nextPage()" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-roseGold to-burgundy border border-accentGold/50 text-white font-medium text-sm md:text-base shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 flex items-center space-x-2">
+                    <span>এখানে টিপ দেও 🙂 পরের পৃষ্ঠায় যাবে </span>
+                    <i class="fas fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: DEPARTMENT EVENT FLASHBACK ================= -->
+        <section id="page-2" class="page-step">
+            <div class="glass-panel rounded-3xl p-6 md:p-10 min-h-[500px] flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="w-10 h-10 rounded-full bg-roseGold/20 flex items-center justify-center text-accentGold border border-roseGold/40">
+                            <i class="fas fa-camera-retro"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-blushPink block">The Memory</span>
+                            <h2 class="text-2xl md:text-3xl font-semibold text-white">ডিপার্টমেন্ট ইভেন্টের সেই দিনটি...</h2>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 items-center">
+                        <div class="space-y-4 text-sm md:text-base text-blushPink/90 leading-relaxed">
+                            <p class="p-4 rounded-2xl bg-burgundy/30 border border-roseGold/20">
+                                কাল ডিপার্টমেন্টের অনুষ্ঠানটার কথা মনে আছে? চারপাশে কত শত মানুষের আনাগোনা আর কোলাহল! কিন্তু এত কিছুর মাঝেও নীল শাড়ি পরা তোমাকে যখন প্রথম দেখলাম, মুহূর্তের জন্য মনে হলো চারপাশের সব শব্দ যেন থমকে গেছে।
+
+শাড়ির সেই নীল রঙটায় তোমাকে এতটা মায়াবী আর অনন্য লাগছিল, তা হয়তো সাধারণ কোনো ক্যামেরায় বন্দি করা সম্ভব নয়,,,,তবে আমার মনের ভেতরের ক্যানভাসে সেই দৃশ্যটা একদম ফ্রেমবন্দী হয়ে গেছে।
+
+সেদিন হুট করে মুখের ওপর সত্যি কথাটা বলতে পারিনি, তাই আজ এই পাতায় রইল সেই না,,বলা মুগ্ধতা..
+                            </p>
+                            <p class="p-4 rounded-2xl bg-burgundy/30 border border-roseGold/20">
+                                তুমি নীল রঙের এক অপূর্ব শাড়িতে সাজবে আর আমার দেখার সুযোগ হবে, এটা যেন সেদিন সবচেয়ে সুন্দর এক অনুভূতি ছিল।
+                            </p>
+                        </div>
+
+                        <!-- Interactive Polaroid Frame -->
+                        <div class="glass-paper p-4 rounded-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500 shadow-2xl text-center">
+                            <div class="w-full h-48 bg-gradient-to-tr from-burgundy via-roseGold to-darkVelvet rounded-xl flex items-center justify-center relative overflow-hidden mb-3 border border-roseGold/30">
+                                <i class="fas fa-heart text-5xl text-accentGold/40 animate-pulse"></i>
+                                <span class="absolute bottom-2 right-2 text-[10px] text-accentGold font-mono">Department Event Day</span>
+                            </div>
+                            <p class="font-cursive text-2xl text-burgundy font-bold">শাড়িতে তুমি... অনন্য!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-between text-xs text-blushPink/60">
+                    <span><i class="fas fa-location-dot mr-1"></i> Department Premises</span>
+                    <span><i class="fas fa-star mr-1"></i> A Unforgettable Memory</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: THE UNSPOKEN COMPLIMENT ================= -->
+        <section id="page-3" class="page-step">
+            <div class="glass-panel rounded-3xl p-6 md:p-10 min-h-[500px] flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="w-10 h-10 rounded-full bg-roseGold/20 flex items-center justify-center text-accentGold border border-roseGold/40">
+                            <i class="fas fa-comment-slash"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-blushPink block">An Unspoken Word</span>
+                            <h2 class="text-2xl md:text-3xl font-semibold text-white">আমার ছোট্ট একটি আক্ষেপ & Sorry</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 max-w-2xl mx-auto">
+                        <div class="p-5 rounded-2xl bg-burgundy/50 border border-roseGold/30 text-blushPink leading-relaxed text-sm md:text-base">
+                            <p class="mb-3">
+                                সেদিনের শাড়িতে তোমাকে এতটাই অপরূপা লাগছিল যে আমি একমুহূর্তের জন্য থমকে গিয়েছিলাম। ইচ্ছে ছিল সামনাসামনি গিয়ে একদম মন থেকে বলি,,,, <span class="text-accentGold font-medium">"তোমাকে আজ সত্যি অদ্ভুত সুন্দর দেখাচ্ছে!"</span>
+                            </p>
+                            <p>
+                                কিন্তু দ্বিধা, ডিপার্টমেন্টের ব্যস্ততা আর কিছুটা জড়তার কারণে মুখে বলতে পারিনি। সেজন্য খুব সরি 😩...
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-accentGold/10 border border-accentGold/30 text-xs md:text-sm text-accentGold flex items-center space-x-3">
+                            <i class="fas fa-sparkles text-lg"></i>
+                            <span>সেদিন মুখে বলতে না পারা compliments টুকু আজকে এই বিশেষ চিঠি দিয়ে শোধ করে দিলাম!,,,  হয়ছে কি??  🙂</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-6">
+                    <span class="text-xs px-4 py-1.5 rounded-full bg-roseGold/20 text-blushPink border border-roseGold/30">
+                        <i class="fas fa-heart-crack mr-1 text-roseGold"></i> Sincere Apology & Respect
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: WHY YOU ARE SPECIAL ================= -->
+        <section id="page-4" class="page-step">
+            <div class="glass-panel rounded-3xl p-6 md:p-10 min-h-[500px] flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="w-10 h-10 rounded-full bg-roseGold/20 flex items-center justify-center text-accentGold border border-roseGold/40">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-blushPink block">Secret Cards</span>
+                            <h2 class="text-2xl md:text-3xl font-semibold text-white">কেন তুমি এত স্পেশাল?</h2>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-blushPink/80 mb-6">নিচের ৩টি গোপনীয় কার্ডে ক্লিক করে অনুভূতির কথাগুলো প্রকাশ করুন:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div onclick="flipCard(1)" id="secret-card-1" class="cursor-pointer p-5 rounded-2xl bg-burgundy/80 border border-roseGold/30 hover:border-accentGold transition-all duration-300 min-h-[140px] flex flex-col items-center justify-center text-center">
+                            <i id="secret-icon-1" class="fas fa-lock text-2xl text-accentGold mb-2"></i>
+                            <span id="secret-title-1" class="text-xs font-semibold text-blushPink">সিক্রেট কার্ড ১</span>
+                            <p id="secret-text-1" class="hidden text-xs text-blushPink/90 mt-2">"তোমার কাজল কালো চোখের সেই মায়াবী চাহনি যা পুরো পৃথিবীর ভিড়ে আলাদা করে চিনতে পারবো মেডাম 🙂।"</p>
+                        </div>
+
+                        <div onclick="flipCard(2)" id="secret-card-2" class="cursor-pointer p-5 rounded-2xl bg-burgundy/80 border border-roseGold/30 hover:border-accentGold transition-all duration-300 min-h-[140px] flex flex-col items-center justify-center text-center">
+                            <i id="secret-icon-2" class="fas fa-lock text-2xl text-accentGold mb-2"></i>
+                            <span id="secret-title-2" class="text-xs font-semibold text-blushPink">সিক্রেট কার্ড ২</span>
+                            <p id="secret-text-2" class="hidden text-xs text-blushPink/90 mt-2">"তোমার মিষ্টি স্নিগ্ধ হাসি যা যেকোনো মানুষের মন ভালো করে দেওয়ার ক্ষমতা রাখে। সাথে আমার ও "</p>
+                        </div>
+
+                        <div onclick="flipCard(3)" id="secret-card-3" class="cursor-pointer p-5 rounded-2xl bg-burgundy/80 border border-roseGold/30 hover:border-accentGold transition-all duration-300 min-h-[140px] flex flex-col items-center justify-center text-center">
+                            <i id="secret-icon-3" class="fas fa-lock text-2xl text-accentGold mb-2"></i>
+                            <span id="secret-title-3" class="text-xs font-semibold text-blushPink">সিক্রেট কার্ড ৩</span>
+                            <p id="secret-text-3" class="hidden text-xs text-blushPink/90 mt-2">"ডিপার্টমেন্টের সবচেয়ে ভালো ও প্রিয় বান্ধবী হয়ে সবসময় পাশে থাইককো plz??  আমি থাকতে চায় তোমার সাথে 😔 ।"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-6 text-xs text-blushPink/60">
+                    <i class="fas fa-touch-app mr-1"></i> সকল কার্ড ক্লিক করার পর পরবর্তী পাতায় ক্লিক করুন
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 5: SAREE COMPLIMENTS ================= -->
+        <section id="page-5" class="page-step">
+            <div class="glass-panel rounded-3xl p-6 md:p-10 min-h-[500px] flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="w-10 h-10 rounded-full bg-roseGold/20 flex items-center justify-center text-accentGold border border-roseGold/40">
+                            <i class="fas fa-gem"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-blushPink block">Saree Compliments</span>
+                            <h2 class="text-2xl md:text-3xl font-semibold text-white">শাড়িতে আপনার মায়াবী রূপ</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-gradient-to-r from-burgundy/80 to-roseGold/30 border border-accentGold/30 flex items-start space-x-4">
+                            <i class="fas fa-eye text-2xl text-accentGold mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-white text-base">চোখের ভাষা</h3>
+                                <p class="text-xs md:text-sm text-blushPink/90">কাজল পরা চোখের সেই গভীর চাহনি সরাসরি হৃদয়ে গিয়ে অনুভূতি তৈরি করে।</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-gradient-to-r from-burgundy/80 to-roseGold/30 border border-accentGold/30 flex items-start space-x-4">
+                            <i class="fas fa-feather text-2xl text-accentGold mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-white text-base">আভিজাত্য ও সরলতা</h3>
+                                <p class="text-xs md:text-sm text-blushPink/90">শাড়ির সাথে আপনার চহরায় যে সরলতা ছিল, তা যেকোনো দামি অর্নামেন্টসের চেয়েও Joss  ছিল( বুঝতে পারছো?)।</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-gradient-to-r from-burgundy/80 to-roseGold/30 border border-accentGold/30 flex items-start space-x-4">
+                            <i class="fas fa-wand-magic-sparkles text-2xl text-accentGold mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-white text-base">অদৃশ্য এক আকর্ষণ</h3>
+                                <p class="text-xs md:text-sm text-blushPink/90">আপনাকে দেখলে মনে হয় সৃষ্টিকর্তা খুব সময় নিয়ে নিখুঁতভাবে একেঁছেন।</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <p class="text-xs text-accentGold italic">"You are breathtaking in ways words cannot easily describe..."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 6: INTERACTIVE QUESTION ================= -->
+        <section id="page-6" class="page-step">
+            <div class="glass-panel rounded-3xl p-6 md:p-10 min-h-[500px] flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="w-10 h-10 rounded-full bg-roseGold/20 flex items-center justify-center text-accentGold border border-roseGold/40">
+                            <i class="fas fa-question text-accentGold"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-blushPink block">Interactive Guess</span>
+                            <h2 class="text-2xl md:text-3xl font-semibold text-white">একটা ছোট্ট মিষ্টি প্রশ্ন...</h2>
+                        </div>
+                    </div>
+
+                    <div class="text-center my-6 space-y-4">
+                        <p class="text-base md:text-lg text-blushPink">
+                            "ডিপার্টমেন্টের সেই ইভেন্টে আপনাকে আমি কতবার লুকিয়ে বা সরাসরি দেখেছি, জানেন?"
+                        </p>
+
+                        <div class="flex flex-wrap justify-center gap-3 pt-4">
+                            <button onclick="checkGuess(1)" class="px-5 py-2.5 rounded-2xl bg-burgundy/60 border border-roseGold/40 hover:border-accentGold text-sm text-blushPink hover:text-white transition-all">
+                                ১০০-২০০ বার 😒 এর থেকে বেশি 
+                            </button>
+                            <button onclick="checkGuess(2)" class="px-5 py-2.5 rounded-2xl bg-burgundy/60 border border-roseGold/40 hover:border-accentGold text-sm text-blushPink hover:text-white transition-all">
+                                500 বারের বেশি
+                            </button>
+                            <button onclick="checkGuess(3)" class="px-5 py-2.5 rounded-2xl bg-burgundy/60 border border-roseGold/40 hover:border-accentGold text-sm text-blushPink hover:text-white transition-all">
+                                কোনো হিসাব নেই, অগণিত বার! ❤️
+                            </button>
+                        </div>
+
+                        <div id="quizResult" class="hidden p-4 rounded-2xl bg-accentGold/20 border border-accentGold text-accentGold text-sm mt-4 font-medium animate-pulse">
+                            <!-- Injected JS result -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center text-xs text-blushPink/60">
+                    চুপচাপ পরের page এ যাও, ওখানে দেখোও, gift box আছে ওইটা টিপ দেও 🙂
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 7: GRAND SURPRISE ANIMATED GIFT BOX ================= -->
+        <section id="page-7" class="page-step">
+            <div class="glass-panel rounded-3xl p-6 md:p-12 text-center flex flex-col items-center justify-center min-h-[520px] relative overflow-hidden">
+                
+                <span class="text-xs font-serifHeader tracking-widest text-accentGold uppercase mb-2">The Grand Surprise</span>
+                <h2 class="text-2xl md:text-4xl font-semibold text-white mb-2">আপনার জন্য একটি গিফট বক্স!</h2>
+                <p id="giftInstruction" class="text-xs md:text-sm text-blushPink/80 max-w-md mb-8">
+                    Box এ টিপ দিয়া ধরো 🙂 খুলবো এইটাই তোমারে দেওয়া প্রথম চিঠি 
+                </p>
+
+                <!-- Interactive 3D CSS Gift Box -->
+                <div class="gift-container my-4" onclick="openGiftBox()">
+                    <div id="giftBox" class="gift-box">
+                        <div class="magic-aura"></div>
+                        <div class="gift-lid">
+                            <div class="gift-bow"></div>
+                            <div class="gift-ribbon-v"></div>
+                        </div>
+                        <div class="gift-body">
+                            <div class="gift-ribbon-v"></div>
+                            <div class="gift-ribbon-h"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="giftProgress" class="hidden mt-6 flex flex-col items-center space-y-2">
+                    <div class="w-48 h-2 bg-burgundy/60 rounded-full overflow-hidden border border-accentGold/40">
+                        <div id="giftBar" class="h-full bg-gradient-to-r from-roseGold via-accentGold to-goldGlow w-0 transition-all duration-[3500ms] linear"></div>
+                    </div>
+                    <span class="text-xs text-accentGold font-mono animate-pulse">Unlocking your heartfelt letter... <i class="fas fa-sparkles"></i></span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 8: THE BENGALI LETTER ================= -->
+        <section id="page-8" class="page-step">
+            <div class="glass-paper rounded-3xl p-6 md:p-10 min-h-[550px] max-h-[82vh] flex flex-col justify-between relative border-2 border-accentGold/60 shadow-2xl">
+                
+                <!-- Scrollable Content -->
+                <div class="overflow-y-auto pr-2 custom-scrollbar space-y-4 text-gray-900 text-sm md:text-base leading-relaxed">
+                    
+                    <div class="border-b border-rose-200 pb-3 mb-4">
+                        <h2 class="text-2xl md:text-3xl font-bold text-burgundy font-serifHeader">Toooo ,</h2>
+                        <p class="text-lg font-semibold text-rose-900 mt-1">কাজল চোখের সেই মায়াবতী…..</p>
+                    </div>
+
+                    <div class="bg-rose-100/70 p-3 rounded-xl border-l-4 border-burgundy text-xs md:text-sm text-burgundy font-semibold">
+                        Subject: আপনার মায়াবী চাহনি আর সুন্দর মুখের উদ্দেশে একজন প্রেমিকের ছোট্ট স্বীকারোক্তি
+                    </div>
+
+                    <p class="font-semibold text-burgundy">প্রিয়,,,,,,</p>
+
+                    <p class="font-medium">জানেন,</p>
+
+                    <p>আপনাকে আমি কতবার দেখেছি, তার কোনো হিসাব নেই।<br>
+                    তবুও প্রতিবার আপনাকে দেখলে মনে হয়,<br>
+                    যেন প্রথমবার দেখছি...</p>
+
+                    <p>প্রথমবার আপনার সেই মায়াবী চোখের গভীরতায় হারিয়ে যাচ্ছি,<br>
+                    প্রথমবার আপনার মুখের সেই অদ্ভুত সৌন্দর্যের প্রেমে পড়ছি।<br>
+                    যখন আপনি তাকান,<br>
+                    তখন মনে হয় পৃথিবীর সমস্ত কোলাহল হঠাৎ থেমে গেছে।<br>
+                    চারপাশে হাজারো শব্দ থাকলেও,<br>
+                    আমার মন শুধু আপনার চোখের ভাষাটাই শুনতে থাকে।</p>
+
+                    <p class="font-semibold text-burgundy">আর আপনার মুখটা...</p>
+
+                    <p>আচ্ছা,<br>
+                    এতটা মায়াবী হওয়া কি সত্যিই সম্ভব?</p>
+
+                    <p>আপনার মুখের দিকে তাকালে মনে হয়,<br>
+                    সৃষ্টিকর্তা খুব যত্ন করে,<br>
+                    খুব ধীরে ধীরে,,,,<br>
+                    অনেকটা ভালোবাসা মিশিয়ে আপনাকে এঁকেছেন।</p>
+
+                    <p>আপনার হাসিটা যেন সকালের প্রথম রোদ,<br>
+                    আর আপনার চাহনিটা ঠিক সন্ধ্যার নরম আলো,,,,,,<br>
+                    দুটোই হৃদয় ছুঁয়ে যায়,<br>
+                    কিন্তু কোনো শব্দ করে না।</p>
+
+                    <p>জানেন,<br>
+                    আপনার চোখের সৌন্দর্য নিয়ে অনেক কিছু লিখতে চেয়েছি,<br>
+                    কিন্তু যতবার লিখতে বসেছি,<br>
+                    ততবার মনে হয়েছে শব্দগুলো খুব ছোট হয়ে যাচ্ছে।</p>
+
+                    <p>কারণ কিছু সৌন্দর্য ভাষায় প্রকাশ করা যায় না,<br>
+                    শুধু অনুভব করা যায়।</p>
+
+                    <p>আপনার সেই মায়াবী চাহনি ঠিক তেমনই।</p>
+
+                    <p>কখনো কখনো মনে হয়,<br>
+                    আপনার চোখে কোনো অদৃশ্য জাদু আছে।</p>
+
+                    <p>না হলে কেন আপনাকে দেখলেই<br>
+                    আমার মন ভালো হয়ে যায়?</p>
+
+                    <p>কেন আপনার একটা হাসি<br>
+                    আমার পুরো দিনটাকে সুন্দর করে দেয়?</p>
+
+                    <p>কেন আপনার দিকে তাকালে<br>
+                    আমি বারবার নিজের অস্তিত্ব ভুলে যাই?</p>
+
+                    <p>হয়তো এর উত্তর আমার জানা নেই।</p>
+
+                    <p>তবে এটুকু জানি,</p>
+
+                    <p>আপনাকে যত দেখি,<br>
+                    ততই নতুন করে মুগ্ধ হই।</p>
+
+                    <p>আপনার চোখের মায়ায়,<br>
+                    আপনার মুখের সরল সৌন্দর্যে,<br>
+                    আপনার হাসির কোমলতায়...</p>
+
+                    <p class="font-bold text-burgundy text-base md:text-lg">আমি প্রতিদিন নতুন করে প্রেমে পড়ি।</p>
+
+                    <p>আর সবচেয়ে সুন্দর ব্যাপার হলো,</p>
+
+                    <p>এই হারিয়ে যাওয়াটা আমার ভীষণ ভালো লাগে।</p>
+
+                    <p>কারণ আমি জানি,<br>
+                    যদি কোনোদিন নিজেকে হারাতেই হয়,<br>
+                    তাহলে আপনার মায়াবী চোখের গভীরতায় হারিয়ে যাওয়ার চেয়ে সুন্দর জায়গা আর হতে পারে না।</p>
+
+                    <p>আপনার মায়াবী চাহনি,<br>
+                    আপনার নিষ্পাপ সুন্দর মুখ,<br>
+                    আর আপনার সেই হৃদয় কাঁপানো হাসির প্রতি,,,,</p>
+
+                    <div class="py-2">
+                        <p class="font-bold text-burgundy">একজন ভীষণ</p>
+                        <p class="font-extrabold text-rose-700 text-lg">মুগ্ধ,</p>
+                        <p class="font-bold text-burgundy">নিঃশব্দে ভালোবেসে যাওয়া প্রেমিকের অসীম স্বীকারোক্তি......... ❤️</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-rose-200 text-right">
+                        <p class="font-serifHeader text-xl text-burgundy font-bold">Yours,</p>
+                        <p class="font-cursive text-3xl text-rose-800">Joy</p>
+                    </div>
+                </div>
+
+                <!-- Footer Action Buttons inside Page 8 -->
+                <div class="mt-4 pt-3 border-t border-rose-200 flex flex-wrap justify-between items-center text-xs text-burgundy gap-2">
+                    <button onclick="triggerConfetti()" class="px-4 py-2 bg-gradient-to-r from-roseGold to-burgundy text-white rounded-full font-medium shadow hover:scale-105 transition-transform flex items-center space-x-1">
+                        <i class="fas fa-heart text-goldGlow"></i>
+                        <span>ভালোবাসা দেও 😩 </span>
+                    </button>
+
+                    <button onclick="goToPage(1)" class="px-4 py-2 bg-rose-200 hover:bg-rose-300 rounded-full font-medium transition-all flex items-center space-x-1">
+                        <i class="fas fa-rotate-right"></i>
+                        <span>প্রথম পেজে দেখে দেখতে চাইলে এখানে টিপ দেও</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="relative z-50 p-4 max-w-md mx-auto w-full">
+        <div class="glass-panel rounded-full p-2 flex items-center justify-between shadow-2xl border border-accentGold/30">
+            <button id="prevBtn" onclick="prevPage()" class="w-10 h-10 rounded-full bg-roseGold/20 hover:bg-roseGold/40 text-accentGold flex items-center justify-center transition-all disabled:opacity-20 disabled:cursor-not-allowed">
+                <i class="fas fa-chevron-left text-sm"></i>
+            </button>
+
+            <!-- Page Dots -->
+            <div id="dotIndicators" class="flex space-x-1.5"></div>
+
+            <button id="nextBtn" onclick="nextPage()" class="w-10 h-10 rounded-full bg-roseGold/20 hover:bg-roseGold/40 text-accentGold flex items-center justify-center transition-all disabled:opacity-20 disabled:cursor-not-allowed">
+                <i class="fas fa-chevron-right text-sm"></i>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 8;
+        let audioCtx = null;
+        let isAudioPlaying = false;
+        let melodyInterval = null;
+
+        // Initialize Dots Navigator
+        function renderDots() {
+            const dotsContainer = document.getElementById('dotIndicators');
+            dotsContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const dot = document.createElement('button');
+                dot.className = `h-2 rounded-full transition-all duration-300 ${i === currentPage ? 'bg-accentGold w-6' : 'bg-roseGold/30 w-2 hover:bg-roseGold'}`;
+                dot.onclick = () => goToPage(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Page Navigation Controller
+        function updatePageDisplay() {
+            document.getElementById('pageIndicator').innerText = currentPage;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageEl = document.getElementById(`page-${i}`);
+                if (i === currentPage) {
+                    pageEl.classList.add('active');
+                } else {
+                    pageEl.classList.remove('active');
+                }
+            }
+
+            document.getElementById('prevBtn').disabled = (currentPage === 1);
+            document.getElementById('nextBtn').disabled = (currentPage === totalPages);
+
+            renderDots();
+
+            // Auto trigger celebration confetti if Page 8 is opened
+            if (currentPage === 8) {
+                setTimeout(triggerConfetti, 500);
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePageDisplay();
+                playClickSound();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePageDisplay();
+                playClickSound();
+            }
+        }
+
+        function goToPage(pageNum) {
+            if (pageNum >= 1 && pageNum <= totalPages) {
+                currentPage = pageNum;
+                updatePageDisplay();
+                playClickSound();
+            }
+        }
+
+        // Keyboard Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') prevPage();
+        });
+
+        // Secret Cards on Page 4
+        function flipCard(cardNum) {
+            const card = document.getElementById(`secret-card-${cardNum}`);
+            const icon = document.getElementById(`secret-icon-${cardNum}`);
+            const text = document.getElementById(`secret-text-${cardNum}`);
+            const title = document.getElementById(`secret-title-${cardNum}`);
+
+            if (text.classList.contains('hidden')) {
+                text.classList.remove('hidden');
+                icon.className = "fas fa-heart text-2xl text-rose-400 mb-2 animate-bounce";
+                title.classList.add('text-accentGold');
+                card.classList.add('border-accentGold', 'bg-burgundy');
+                playClickSound();
+            }
+        }
+
+        // Quiz Selection on Page 6
+        function checkGuess(option) {
+            const res = document.getElementById('quizResult');
+            res.classList.remove('hidden');
+            res.innerText = "ঠিক বলেছেন! আপনাকে দেখার কোনো নির্দিষ্ট হিসাব ছিল না... অগণিত বার দেখা সত্ত্বেও মনে হচ্ছিল যেন প্রথমবার দেখছি! ❤️";
+            playClickSound();
+        }
+
+        // GIFT BOX OPENING ANIMATION (3.5 Seconds)
+        let isGiftOpened = false;
+        function openGiftBox() {
+            if (isGiftOpened) return;
+            isGiftOpened = true;
+
+            const giftBox = document.getElementById('giftBox');
+            const progress = document.getElementById('giftProgress');
+            const bar = document.getElementById('giftBar');
+            const instruction = document.getElementById('giftInstruction');
+
+            instruction.innerText = "সারপ্রাইজটি খুলছে... অনুগ্রহ করে ৩-৪ সেকেন্ড অপেক্ষা করুন ✨";
+            giftBox.classList.add('gift-opening');
+            progress.classList.remove('hidden');
+
+            // Play Special Gift Opening Sound Effect
+            playGiftSound();
+
+            // Animate progress bar over 3.5s
+            setTimeout(() => {
+                bar.style.width = "100%";
+            }, 100);
+
+            // Trigger sparkles & confetti burst during opening
+            setTimeout(() => {
+                triggerConfetti();
+            }, 2000);
+
+            // Automatically navigate to Page 8 after 3.8 seconds
+            setTimeout(() => {
+                goToPage(8);
+            }, 3800);
+        }
+
+        // Canvas Confetti Effect
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#C87D87', '#FFD1DC', '#FF69B4']
+                });
+            }
+        }
+
+        // Ambient Web Audio Synthesizer
+        function toggleAudio() {
+            const btnLabel = document.getElementById('soundLabel');
+            const btnIcon = document.getElementById('soundIcon');
+
+            if (!isAudioPlaying) {
+                startSynthesizer();
+                btnIcon.className = "fas fa-pause text-accentGold";
+                btnLabel.innerText = "Pause Music";
+                isAudioPlaying = true;
+            } else {
+                stopSynthesizer();
+                btnIcon.className = "fas fa-music text-roseGold";
+                btnLabel.innerText = "Ambient Music";
+                isAudioPlaying = false;
+            }
+        }
+
+        function startSynthesizer() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+
+                const scale = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25]; // Romantic Pentatonic Scale Notes
+                let index = 0;
+
+                melodyInterval = setInterval(() => {
+                    if (!audioCtx || audioCtx.state === 'closed') return;
+
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(scale[index % scale.length], audioCtx.currentTime);
+
+                    gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.1, audioCtx.currentTime + 0.4);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2.0);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 2.0);
+
+                    index = (index + Math.floor(Math.random() * 2) + 1) % scale.length;
+                }, 1000);
+
+            } catch (e) {
+                console.log('Audio Context Error:', e);
+            }
+        }
+
+        function stopSynthesizer() {
+            if (melodyInterval) clearInterval(melodyInterval);
+            if (audioCtx) audioCtx.close();
+        }
+
+        function playClickSound() {
+            try {
+                if (!audioCtx || audioCtx.state === 'closed') return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            } catch (e) {}
+        }
+
+        function playGiftSound() {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioCtx();
+                const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+                
+                notes.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime + (idx * 0.15));
+                    gain.gain.setValueAtTime(0.05, ctx.currentTime + (idx * 0.15));
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (idx * 0.15) + 1.2);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime + (idx * 0.15));
+                    osc.stop(ctx.currentTime + (idx * 0.15) + 1.2);
+                });
+            } catch (e) {}
+        }
+
+        // Background Star & Heart Floating Particle Engine
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class FloatingParticle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 30;
+                this.size = Math.random() * 10 + 4;
+                this.speedY = Math.random() * 0.8 + 0.3;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.type = Math.floor(Math.random() * 2);
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -20) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.translate(this.x, this.y);
+
+                if (this.type === 0) {
+                    // Floating Soft Hearts
+                    ctx.fillStyle = '#C87D87';
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-this.size/2, -this.size/2, -this.size, this.size/3, 0, this.size);
+                    ctx.bezierCurveTo(this.size, this.size/3, this.size/2, -this.size/2, 0, 0);
+                    ctx.fill();
+                } else {
+                    // Glowing Golden Twinkling Stars
+                    ctx.fillStyle = '#FFD700';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size / 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(window.innerWidth / 30), 40);
+            for (let i = 0; i < count; i++) {
+                particles.push(new FloatingParticle());
+            }
+        }
+
+        function renderParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(renderParticles);
+        }
+
+        initParticles();
+        renderParticles();
+
+        // On Page Load
+        window.onload = function() {
+            updatePageDisplay();
+        };
+    </script>
+</body>
+</html>
